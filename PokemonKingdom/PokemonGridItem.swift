@@ -28,10 +28,10 @@ struct PokemonGridItem: View {
                     .background(Color.gray)
             }
 
-            Text("\(pokemon.number). \(pokemon.name)")
-                .bold()
-                .multilineTextAlignment(.center)
-                .padding(3)
+            ///Text("\(pokemon.number). \(pokemon.name)")
+               /// .bold()
+               /// .multilineTextAlignment(.center)
+               /// .padding(3)
         }
         .onAppear {
             fetchSpriteImage()

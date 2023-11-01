@@ -49,22 +49,25 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 HStack {
-                    TextField("Search", text: $searchText)
+                    HStack{
+                    Image(systemName: "magnifyingglass").foregroundColor(.gray)
+                    TextField("Search...", text: $searchText)
                         .padding(8)
-                        .background(Color(.systemGray6))
+                    }.background(Color(.systemGray6))
                         .cornerRadius(8)
 
                     Spacer()
                     Button(action: {
                         showFilterOptions.toggle()
                     }) {
-                        Text(selectedFilterOption ?? "Filter")
+                        Image(systemName: "line.3.horizontal.decrease.circle").foregroundColor(.black)
+
                     }
                     .sheet(isPresented: $showFilterOptions) {
                         FilterOptionsView(options: filterOptions, selectedOption: $selectedFilterOption)
                     }
 
-                    Text("QR Code")
+                    Image(systemName: "qrcode").foregroundColor(.black)
                 }
                 .padding()
 
@@ -83,7 +86,7 @@ struct ContentView: View {
                             currentPage -= 1
                         }
                     }) {
-                        if (currentPage > 1) { Image(systemName: "arrow.left") }
+                        if (currentPage > 1) { Image(systemName: "arrowshape.left").foregroundColor(.black) }
                     }
                     Spacer()
                     Text("\(currentPage)")
@@ -93,7 +96,7 @@ struct ContentView: View {
                             currentPage += 1
                         }
                     }) {
-                        Image(systemName: "arrow.right")
+                        Image(systemName: "arrowshape.right").foregroundColor(.black)
                     }
                 }
                 .padding()
