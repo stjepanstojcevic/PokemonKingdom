@@ -28,7 +28,7 @@ struct QRView: View {
 
     var body: some View {
         VStack {
-            Text("Pokemons: \(scannedNumbers.map(String.init).joined(separator: ", "))")
+            Text("Scanned Pokemons: \(scannedNumbers.map(String.init).joined(separator: ", "))")
 
             if selectedImage != nil {
                 AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName?.lowercased() ?? "").png")) { phase in
