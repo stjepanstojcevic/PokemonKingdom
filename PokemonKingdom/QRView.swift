@@ -55,23 +55,19 @@ struct QRView: View {
                         EmptyView()
                     }
                 }
-
+                
                 if let qrCodeContent = qrCodeContent {
                     Text(qrCodeContent)
-                        .padding()
 
 
                     if let scannedPokemonSpecies = scannedPokemonSpecies {
                         Text("Species: \(scannedPokemonSpecies)")
-                            .padding()
                     }
                     if let scannedPokemonHeight = scannedPokemonHeight{
                         Text("Height: \(scannedPokemonHeight)")
-                            .padding()
                     }
                     if let scannedPokemonWeight = scannedPokemonWeight{
                         Text("Weight: \(scannedPokemonWeight)")
-                            .padding()
                     }
                 } else {
                     Text("No number")
@@ -89,10 +85,13 @@ struct QRView: View {
                 loadImageFromURL()
             }
             .padding()
-            .background(Color.gray) // Dodano postavljanje boje pozadine
-            .foregroundColor(.white) // Dodano postavljanje boje teksta
+            .background(Color.gray)
+            .foregroundColor(.white)
             .cornerRadius(20)
-
+            Image(uiImage: selectedImage ?? UIImage())
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 100, height: 100)
         }
         .padding()
     }
