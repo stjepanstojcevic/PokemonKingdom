@@ -66,9 +66,9 @@
 				FAA6000A2AF23C83009E7174 /* PokemonGridItem.swift */,
 				FAA6000C2AF23EB2009E7174 /* FilterOptionsView.swift */,
 				FA96E08A2AF005D100EEF819 /* PokemonKingdomApp.swift */,
+				FA82CC0D2AF41A760095226F /* QRView.swift */,
 				FA96E08E2AF005D100EEF819 /* Assets.xcassets */,
 				FA96E0902AF005D100EEF819 /* Preview Content */,
-				FA82CC0D2AF41A760095226F /* QRView.swift */,
 			);
 			path = PokemonKingdom;
 			sourceTree = "<group>";

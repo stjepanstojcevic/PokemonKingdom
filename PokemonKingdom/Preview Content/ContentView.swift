@@ -88,7 +88,7 @@ struct ContentView: View {
                             currentPage += 1
                         }
                     }) {
-                        if (currentPage<57) { Image(systemName: "arrowshape.right").foregroundColor(.gray) }
+                        if (currentPage<(visiblePokemon.count/18)) { Image(systemName: "arrowshape.right").foregroundColor(.gray) }
                     }
                 }
                 .padding()

@@ -45,7 +45,7 @@ struct QRView: View {
                             .frame(width: 80, height: 80)
                             .foregroundColor(Color.gray)
                             .overlay(
-                                Text("Image not available")
+                                Text("Pokemon not found.")
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                             )
