@@ -15,33 +15,24 @@ struct ContentView: View {
     @State private var itemsPerPage = 18
     let totalPages = 57
 
+    @State private var showQR = false
     @State private var showFilterOptions = false
     @State private var selectedFilterOption: String? = nil
-    let filterOptions = ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
+    let filterOptions = ["Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"]
+
+    @State private var scannedNumbers: [Int] = []
 
     var visiblePokemon: [Pokemon] {
         if searchText.isEmpty {
-            return viewModel.pokemoni
+            return viewModel.filteredPokemoni
         } else {
-            return viewModel.pokemoni.filter { $0.name.lowercased().contains(searchText.lowercased()) }
-        }
-    }
-
-    var filteredPokemon: [Pokemon] {
-        guard viewModel.pokemoni.count == 1010 else {
-            return []
-        }
-
-        if let selectedFilterOption = selectedFilterOption {
-            return visiblePokemon.filter { $0.types.contains(selectedFilterOption) }
-        } else {
-            return visiblePokemon
+            return viewModel.filteredPokemoni.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
 
     var visibleIndices: [Int] {
         let startIndex = (currentPage - 1) * itemsPerPage
-        let endIndex = min(currentPage * itemsPerPage, filteredPokemon.count)
+        let endIndex = min(currentPage * itemsPerPage, visiblePokemon.count)
         return Array(startIndex..<endIndex)
     }
 
@@ -50,11 +41,9 @@ struct ContentView: View {
             VStack {
                 HStack {
                     HStack{
-                    Image(systemName: "magnifyingglass").foregroundColor(.gray)
-                    TextField("Search...", text: $searchText)
-                        .padding(8)
-                    }.background(Color(.systemGray6))
-                        .cornerRadius(8)
+                        Image(systemName: "magnifyingglass").foregroundColor(.gray)
+                                TextField("Search...", text: $searchText).padding(8)
+                                }.background(Color(.systemGray6)).cornerRadius(8)
 
                     Spacer()
                     Button(action: {
@@ -64,17 +53,20 @@ struct ContentView: View {
 
                     }
                     .sheet(isPresented: $showFilterOptions) {
-                        FilterOptionsView(options: filterOptions, selectedOption: $selectedFilterOption)
+                        FilterOptionsView(viewModel: viewModel, options: filterOptions, selectedOption: $selectedFilterOption)
                     }
 
-                    Image(systemName: "qrcode").foregroundColor(.black)
+
+                    Button(action: {showQR.toggle()}){ Image(systemName: "qrcode").foregroundColor(.black)}.sheet(isPresented: $showQR) {
+                        QRView(viewModel: viewModel, scannedNumbers: $scannedNumbers)
+                    }
                 }
                 .padding()
 
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 10) {
                         ForEach(visibleIndices, id: \.self) { index in
-                            PokemonGridItem(pokemon: filteredPokemon[index])
+                            PokemonGridItem(pokemon: visiblePokemon[index], scannedNumbers: $scannedNumbers, viewModel: viewModel)
                         }
                     }
                     .padding()
@@ -86,7 +78,7 @@ struct ContentView: View {
                             currentPage -= 1
                         }
                     }) {
-                        if (currentPage > 1) { Image(systemName: "arrowshape.left").foregroundColor(.black) }
+                        if (currentPage > 1) { Image(systemName: "arrowshape.left").foregroundColor(.gray) }
                     }
                     Spacer()
                     Text("\(currentPage)")
@@ -96,7 +88,7 @@ struct ContentView: View {
                             currentPage += 1
                         }
                     }) {
-                        Image(systemName: "arrowshape.right").foregroundColor(.black)
+                        if (currentPage<57) { Image(systemName: "arrowshape.right").foregroundColor(.gray) }
                     }
                 }
                 .padding()
@@ -105,5 +97,11 @@ struct ContentView: View {
                 viewModel.fetch()
             }
         }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }

@@ -10,28 +10,34 @@ import SwiftUI
 struct PokemonGridItem: View {
     let pokemon: Pokemon
     @State private var spriteImage: UIImage? = nil
+    @State private var isScanned: Bool = false
+    @Binding var scannedNumbers: [Int]
+    @ObservedObject var viewModel: ViewModel
+    var selectedFilterOption: String?
 
     var body: some View {
         VStack {
-            if let spriteImage = spriteImage {
+            if isScanned, let spriteImage = spriteImage, viewModel.filteredPokemoni.contains(pokemon) && (selectedFilterOption == nil || pokemon.types.contains(selectedFilterOption!)) {
                 Image(uiImage: spriteImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
-                    .background(Color(hue: 1.0, saturation: 0.026, brightness: 0.859))
+                    .background(Color.black)
                     .cornerRadius(20)
             } else {
-                Image(systemName: "photo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 95, height: 95)
-                    .background(Color.gray)
+                RoundedRectangle(cornerRadius: 20)
+                    .frame(width: 80, height: 80)
+                    .foregroundColor(Color.gray)
+                    .overlay(
+                        Text("Pokemon Kingdom")
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                    )
             }
-
             ///Text("\(pokemon.number). \(pokemon.name)")
-               /// .bold()
-               /// .multilineTextAlignment(.center)
-               /// .padding(3)
+            ///    .bold()
+            ///    .multilineTextAlignment(.center)
+            ///    .padding(3)
         }
         .onAppear {
             fetchSpriteImage()
@@ -39,7 +45,7 @@ struct PokemonGridItem: View {
     }
 
     private func fetchSpriteImage() {
-        guard let url = URL(string: pokemon.sprite) else {
+        guard let url = URL(string: "https://img.pokemondb.net/sprites/home/normal/\(pokemon.name.lowercased()).png") else {
             return
         }
 
@@ -49,8 +55,10 @@ struct PokemonGridItem: View {
             if let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                     spriteImage = image
+                    isScanned = scannedNumbers.contains(pokemon.number)
                 }
             }
         }.resume()
     }
 }
+

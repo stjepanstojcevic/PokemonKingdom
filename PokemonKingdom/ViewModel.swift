@@ -8,8 +8,20 @@
 import SwiftUI
 
 class ViewModel: ObservableObject {
-
     @Published var pokemoni: [Pokemon] = []
+    @Published var filterType: String? = nil
+
+    var filterOptions: [String] {
+        Set(pokemoni.flatMap { $0.types }).sorted()
+    }
+
+    var filteredPokemoni: [Pokemon] {
+        if let filterType = filterType {
+            return pokemoni.filter { $0.types.contains(filterType) }
+        } else {
+            return pokemoni
+        }
+    }
 
     func fetch() {
         let pokemonCount = 1010
@@ -49,7 +61,7 @@ class ViewModel: ObservableObject {
                     self?.pokemoni.append(contentsOf: decodedPokemon)
                 }
             } catch {
-                print("Error decoding JSON: \(error.localizedDescription)")
+                print("")
             }
         }
         task.resume()

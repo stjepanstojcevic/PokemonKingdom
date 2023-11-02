@@ -10,13 +10,18 @@ import Foundation
 struct Pokemon: Hashable, Codable {
     let number: Int
     let name: String
-    let sprite: String
     let types: [String]
-
+    let species: String
+    let height: String
+    let weight: String
+    
     private enum CodingKeys: String, CodingKey {
         case number
         case name
-        case sprite
         case types
+        case species
+        case height
+        case weight
     }
+
 }
