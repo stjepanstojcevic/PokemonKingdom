@@ -31,6 +31,10 @@ struct FilterOptionsView: View {
                 HStack {
                     Image("Pokemon_Type_Icon_\(option)").resizable().frame(width: 30,height: 30)
                     Text(option)
+                    Spacer()
+                    if selectedOption == option {
+                        Image(systemName: "checkmark")
+                        .foregroundColor(.gray)}
                 }
             }
         }
