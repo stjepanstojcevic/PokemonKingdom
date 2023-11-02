@@ -53,7 +53,8 @@ struct ContentView: View {
 
                     }
                     .sheet(isPresented: $showFilterOptions) {
-                        FilterOptionsView(viewModel: viewModel, options: filterOptions, selectedOption: $selectedFilterOption)
+                        FilterOptionsView(viewModel: viewModel, options: filterOptions, selectedOption: $selectedFilterOption, isFilterOptionsViewPresented: $showFilterOptions)
+        
                     }
 
 
