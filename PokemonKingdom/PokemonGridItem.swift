@@ -34,31 +34,24 @@ struct PokemonGridItem: View {
                             .multilineTextAlignment(.center)
                     )
             }
-            ///Text("\(pokemon.number). \(pokemon.name)")
-            ///    .bold()
-            ///    .multilineTextAlignment(.center)
-            ///    .padding(3)
+            ///Text("\(pokemon.number). \(pokemon.name)").bold().multilineTextAlignment(.center).padding(3)
         }
         .onAppear {
-            fetchSpriteImage()
-        }
-    }
-
-    private func fetchSpriteImage() {
-        guard let url = URL(string: "https://img.pokemondb.net/sprites/home/normal/\(pokemon.name.lowercased()).png") else {
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else { return }
-
-            if let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    spriteImage = image
-                    isScanned = scannedNumbers.contains(pokemon.number)
-                }
+            guard let url = URL(string: "https://img.pokemondb.net/sprites/home/normal/\(pokemon.name.lowercased()).png") else {
+                return
             }
-        }.resume()
+
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data, error == nil else { return }
+
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        spriteImage = image
+                        isScanned = scannedNumbers.contains(pokemon.number)
+                    }
+                }
+            }.resume()
+        }
     }
 }
 

@@ -65,10 +65,9 @@
 				FAA600082AF23C53009E7174 /* ViewModel.swift */,
 				FAA6000A2AF23C83009E7174 /* PokemonGridItem.swift */,
 				FAA6000C2AF23EB2009E7174 /* FilterOptionsView.swift */,
-				FA96E08A2AF005D100EEF819 /* PokemonKingdomApp.swift */,
 				FA82CC0D2AF41A760095226F /* QRView.swift */,
 				FAA6000E2AF23EFC009E7174 /* ContentView.swift */,
-				FA96E08E2AF005D100EEF819 /* Assets.xcassets */,
+				FA96E08A2AF005D100EEF819 /* PokemonKingdomApp.swift */,
 				FA96E0902AF005D100EEF819 /* Preview Content */,
 			);
 			path = PokemonKingdom;
@@ -77,6 +76,7 @@
 		FA96E0902AF005D100EEF819 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				FA96E08E2AF005D100EEF819 /* Assets.xcassets */,
 				FA96E0912AF005D100EEF819 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";

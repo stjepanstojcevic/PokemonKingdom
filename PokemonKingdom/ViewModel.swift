@@ -33,10 +33,6 @@ class ViewModel: ObservableObject {
             dispatchGroup.enter()
             fetchPokemon(url: url, dispatchGroup: dispatchGroup)
         }
-
-        dispatchGroup.notify(queue: .main) {
-            print("All Pokemon data fetched.")
-        }
     }
 
     private func fetchPokemon(url: String, dispatchGroup: DispatchGroup) {
