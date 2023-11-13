@@ -31,7 +31,7 @@ struct QRView: View {
             Text("Scanned Pokemons: \(scannedNumbers.map(String.init).joined(separator: ", "))")
 
             if selectedImage != nil {
-                AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName?.lowercased() ?? "").png")) { phase in
+                AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName!.lowercased()).png")) { phase in
                     switch phase {
                     case .success(let image):
                         image
@@ -116,7 +116,7 @@ struct QRView: View {
             }
         }.resume()
     }
-
+    
     private func checkQRCode(from image: UIImage) {
         guard let ciImage = CIImage(image: image) else {
             print("Couldn't convert UIImage to CIImage")

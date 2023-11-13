@@ -38,7 +38,6 @@ struct FilterOptionsView: View {
                 }
             }
         }
-
         Button("Apply") {
             isFilterOptionsViewPresented = false
         }.padding()

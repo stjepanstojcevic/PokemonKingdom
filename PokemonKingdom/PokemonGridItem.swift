@@ -22,7 +22,7 @@ struct PokemonGridItem: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 80, height: 80)
-                    .background(Color.black)
+                    .background(Color.gray)
                     .cornerRadius(20)
             } else {
                 RoundedRectangle(cornerRadius: 20)
