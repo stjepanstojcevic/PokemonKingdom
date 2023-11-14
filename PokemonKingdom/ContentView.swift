@@ -76,7 +76,7 @@ struct ContentView: View {
                     Button(action: {
                         if currentPage < totalPages {  currentPage += 1 } })
                     {
-                        if (currentPage<(visiblePokemon.count/18)) { Image(systemName: "arrowshape.right").foregroundColor(.gray) }
+                        Image(systemName: "arrowshape.right").foregroundColor(.gray) 
                     }
                 }.padding()
             }.onAppear { viewModel.fetch() }
