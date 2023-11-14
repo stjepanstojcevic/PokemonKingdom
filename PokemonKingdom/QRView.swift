@@ -10,6 +10,7 @@ import Foundation
 
 struct QRView: View {
     @State private var selectedImage: UIImage? = nil
+    @State private var selectedPokemon: Pokemon? = nil
     @State private var imageURLString: String = ""
     @State private var isImagePickerPresented: Bool = false
     @State private var qrCodeContent: String? = nil
@@ -30,7 +31,7 @@ struct QRView: View {
         VStack {
             Text("Scanned Pokemons: \(scannedNumbers.map(String.init).joined(separator: ", "))")
 
-            if selectedImage != nil {
+            if selectedPokemon != nil {
                 AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName!.lowercased()).png")) { phase in
                     switch phase {
                     case .success(let image):
@@ -58,7 +59,6 @@ struct QRView: View {
                 
                 if let qrCodeContent = qrCodeContent {
                     Text(qrCodeContent)
-
 
                     if let scannedPokemonSpecies = scannedPokemonSpecies {
                         Text("Species: \(scannedPokemonSpecies)")
@@ -94,6 +94,9 @@ struct QRView: View {
                 .frame(width: 100, height: 100)
         }
         .padding()
+        .onAppear {
+            loadPokemonLocally()
+        }
     }
 
     private func loadImageFromURL() {
@@ -145,7 +148,7 @@ struct QRView: View {
                             }
                         }
                     } else {
-                        qrCodeContent = "Number not in the interval."
+                        qrCodeContent = "Pokemon not found."
                     }
                 } else {
                     qrCodeContent = nil
@@ -153,4 +156,27 @@ struct QRView: View {
             }
         }
     }
+
+    private func savePokemonLocally(pokemon: Pokemon) {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(pokemon)
+            UserDefaults.standard.set(data, forKey: "selectedPokemonData")
+        } catch {
+            print("Error saving Pokemon locally: \(error)")
+        }
+    }
+
+    private func loadPokemonLocally() {
+        if let data = UserDefaults.standard.data(forKey: "selectedPokemonData") {
+            do {
+                let decoder = JSONDecoder()
+                let pokemon = try decoder.decode(Pokemon.self, from: data)
+                selectedPokemon = pokemon
+            } catch {
+                print("Error loading Pokemon locally: \(error)")
+            }
+        }
+    }
 }
+
