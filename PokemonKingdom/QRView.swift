@@ -32,7 +32,7 @@ struct QRView: View {
             Text("Scanned Pokemons: \(scannedNumbers.map(String.init).joined(separator: ", "))")
 
             if selectedPokemon != nil {
-                AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName!.lowercased()).png")) { phase in
+                AsyncImage(url: URL(string: "https://img.pokemondb.net/sprites/home/normal/\(scannedPokemonName?.lowercased() ?? "").png")) { phase in
                     switch phase {
                     case .success(let image):
                         image
@@ -46,7 +46,7 @@ struct QRView: View {
                             .frame(width: 80, height: 80)
                             .foregroundColor(Color.gray)
                             .overlay(
-                                Text("Pokemon not found.")
+                                Text("No selected image")
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                             )
