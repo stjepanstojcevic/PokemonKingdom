@@ -63,10 +63,10 @@ struct QRView: View {
                     if let scannedPokemonSpecies = scannedPokemonSpecies {
                         Text("Species: \(scannedPokemonSpecies)")
                     }
-                    if let scannedPokemonHeight = scannedPokemonHeight{
+                    if let scannedPokemonHeight = scannedPokemonHeight {
                         Text("Height: \(scannedPokemonHeight)")
                     }
-                    if let scannedPokemonWeight = scannedPokemonWeight{
+                    if let scannedPokemonWeight = scannedPokemonWeight {
                         Text("Weight: \(scannedPokemonWeight)")
                     }
                 } else {
@@ -145,6 +145,8 @@ struct QRView: View {
 
                                 qrCodeContent = "\(number) - \(scannedPokemonName!)"
                                 scannedNumbers.append(number)
+
+                                savePokemonLocally(pokemon: viewModel.pokemoni[pokemonIndex])
                             }
                         }
                     } else {
@@ -163,7 +165,7 @@ struct QRView: View {
             let data = try encoder.encode(pokemon)
             UserDefaults.standard.set(data, forKey: "selectedPokemonData")
         } catch {
-            print("Error saving Pokemon locally: \(error)")
+            print("Error encoding Pokemon: \(error.localizedDescription)")
         }
     }
 
@@ -171,12 +173,11 @@ struct QRView: View {
         if let data = UserDefaults.standard.data(forKey: "selectedPokemonData") {
             do {
                 let decoder = JSONDecoder()
-                let pokemon = try decoder.decode(Pokemon.self, from: data)
-                selectedPokemon = pokemon
+                let loadedPokemon = try decoder.decode(Pokemon.self, from: data)
+                selectedPokemon = loadedPokemon
             } catch {
-                print("Error loading Pokemon locally: \(error)")
+                print("Error decoding Pokemon: \(error.localizedDescription)")
             }
         }
     }
 }
-
