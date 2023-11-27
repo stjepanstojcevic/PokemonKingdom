@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Pokemon: Hashable, Codable {
+struct Pokemon: Hashable, Codable { //these protocols enables hashing and en/decoding pokemons
     let number: Int
     let name: String
     let types: [String]

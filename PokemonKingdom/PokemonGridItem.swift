@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokemonGridItem: View {
     let pokemon: Pokemon
+    //@State-used for property when that property woll be changed and that change should be visible in UI automatically
     @State private var spriteImage: UIImage? = nil
     @State private var isScanned: Bool = false
     @Binding var scannedNumbers: [Int]
@@ -34,9 +35,9 @@ struct PokemonGridItem: View {
                             .multilineTextAlignment(.center)
                     )
             }
-            ///Text("\(pokemon.number). \(pokemon.name)").bold().multilineTextAlignment(.center).padding(3)
+            //Text("\(pokemon.number). \(pokemon.name)").bold().multilineTextAlignment(.center).padding(3)
         }
-        .onAppear {
+        .onAppear { //this part of code would be called when view shows on mobile screen
             guard let url = URL(string: "https://img.pokemondb.net/sprites/home/normal/\(pokemon.name.lowercased()).png") else {
                 return
             }
@@ -50,7 +51,7 @@ struct PokemonGridItem: View {
                         isScanned = scannedNumbers.contains(pokemon.number)
                     }
                 }
-            }.resume()
+            }.resume() //when all tasks are set up with needed infos we call resume method to start URLSession because it's ready to fetch data from URL
         }
     }
 }
